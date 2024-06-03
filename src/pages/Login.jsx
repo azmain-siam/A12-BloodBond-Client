@@ -10,7 +10,7 @@ const Login = () => {
   const { register } = useForm();
   const [showPass, setShowPass] = useState(false);
   return (
-    <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-5xl mt-6 mb-10 border">
+    <div className="flex w-full gap-10 max-w-sm mx-auto overflow-hidden bg-white rounded-2xl shadow-md lg:max-w-5xl mt-6 mb-10 pl-10">
       <Helmet>
         <title>Login | HelpHive</title>
       </Helmet>
