@@ -9,16 +9,38 @@ const Navbar = () => {
     console.log(open);
   };
 
+  // NavBar Class
+  const navClass = ({ isActive }) =>
+    isActive
+      ? "flex items-center border-b-[2px] px-1 border-red-400"
+      : "flex items-center px-1 border-b-[2px] border-transparent";
+
+  // Navbar Links
   const navlinks = (
     <>
-      <li className="block p-1 antialiased leading-normal">
-        <Link className="flex items-center">Donation Requests</Link>
+      <li className="block antialiased leading-normal ">
+        <NavLink to={"/"} className={navClass}>
+          Home
+        </NavLink>
       </li>
-      <li className="block p-1 antialiased leading-normal">
-        <Link className="flex items-center">Blog</Link>
+      <li className="block antialiased leading-normal">
+        <NavLink to={"/donation-requests"} className={navClass}>
+          Donation Requests
+        </NavLink>
+      </li>
+      <li className="block antialiased leading-normal">
+        <NavLink to={"/blog"} className={navClass}>
+          Blog
+        </NavLink>
       </li>
     </>
   );
+
+  const sideNavClass = ({ isActive }) =>
+    isActive
+      ? "block p-4 text-sm font-semibold bg-blue-50 text-blue-600 rounded"
+      : "block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded";
+
   return (
     <div className="grid w-full place-items-center rounded-lg p-6 lg:overflow-visible">
       <div className="-m-6 max-h-[768px] w-[calc(100%+48px)]">
@@ -31,7 +53,7 @@ const Navbar = () => {
                   onClick={handleShowSideNav}
                   className="navbar-burger flex items-center "
                 >
-                  <HiMenuAlt2 size={21}/>
+                  <HiMenuAlt2 size={21} />
                 </button>
               </div>
               <Link
@@ -49,7 +71,7 @@ const Navbar = () => {
               </div>
               <div className="flex items-center gap-x-1">
                 <button
-                  className="hidden select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle font-semibold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block"
+                  className="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle font-semibold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block"
                   type="button"
                 >
                   <span>Sign in</span>
@@ -84,48 +106,23 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
+          {/* <------ SideNav ------> */}
           <div>
             <ul>
-              <li className="mb-1">
-                <NavLink
-                  to={"/"}
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
-                >
+              <li className="mb-1" onClick={handleShowSideNav}>
+                <NavLink to={"/"} className={sideNavClass}>
                   Home
                 </NavLink>
               </li>
-              <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
-                >
-                  About Us
-                </a>
+              <li className="mb-1" onClick={handleShowSideNav}>
+                <NavLink to={"/donation-requests"} className={sideNavClass}>
+                  Donation Requests
+                </NavLink>
               </li>
-              <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
-                >
-                  Services
-                </a>
-              </li>
-              <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
-                >
-                  Contact
-                </a>
+              <li className="mb-1" onClick={handleShowSideNav}>
+                <NavLink to={"/blog"} className={sideNavClass}>
+                  Blog
+                </NavLink>
               </li>
             </ul>
           </div>
