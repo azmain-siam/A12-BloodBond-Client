@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenuAlt2 } from "react-icons/hi";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
   const handleShowSideNav = () => {
     setOpen(!open);
     console.log(open);
@@ -69,14 +71,77 @@ const Navbar = () => {
                   {navlinks}
                 </ul>
               </div>
-              <Link to={"/login"}>
-                <button
-                  className="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle font-semibold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block"
-                  type="button"
-                >
-                  <span>Sign in</span>
-                </button>
-              </Link>
+              {user ? (
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS Navbar component"
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content mt-3 z-[1] p-2 border shadow-lg bg-base-100 rounded-box "
+                  >
+                    <div className="px-4 py-3 text-sm text-gray-900">
+                      <div>{user.displayName}</div>
+                      <div className="font-medium truncate">{user.email}</div>
+                    </div>
+                    <ul
+                      className="py-2 text-sm text-gray-700"
+                      aria-labelledby="dropdownUserAvatarButton"
+                    >
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 hover:bg-gray-100 "
+                        >
+                          Dashboard
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 hover:bg-gray-100"
+                        >
+                          Settings
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 hover:bg-gray-100"
+                        >
+                          Earnings
+                        </a>
+                      </li>
+                    </ul>
+                    <div className="py-2">
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Sign out
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link to={"/login"}>
+                  <button
+                    className="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle font-semibold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block"
+                    type="button"
+                  >
+                    <span>Sign in</span>
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </nav>

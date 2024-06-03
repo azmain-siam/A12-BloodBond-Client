@@ -8,19 +8,22 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import registerLogo from "../assets/login.svg";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Register = () => {
-  const { user } = useAuth();
+  const { user, createUser, updateUserProfile, loading, setLoading } =
+    useAuth();
   const [error, setError] = useState("");
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazillas] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [navigate, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/");
+  //   }
+  // }, [navigate, user]);
 
   const { register, handleSubmit } = useForm();
 
@@ -28,32 +31,6 @@ const Register = () => {
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])/;
-
-  const onSubmit = (data) => {
-    console.table(data);
-    const {
-      name,
-      email,
-      image,
-      blood_group,
-      district,
-      upazila,
-      password,
-      confirmPassword,
-    } = data;
-    const role = "donor";
-    const status = "active";
-    console.log(image[0]);
-    console.log(data, role, status);
-
-    if (password !== confirmPassword) {
-      return toast.error("Password not matched");
-    }
-    if (password.length < 6) {
-      setError("Password length must be at least 6 chacacters");
-      return;
-    }
-  };
 
   useEffect(() => {
     fetch("/districts.json")
@@ -66,6 +43,54 @@ const Register = () => {
       .then((res) => res.json())
       .then((data) => setUpazillas(data));
   }, []);
+
+  // Handle Submit Button
+  const onSubmit = async (d) => {
+    const {
+      name,
+      email,
+      image,
+      blood_group,
+      district,
+      upazila,
+      password,
+      confirmPassword,
+    } = d;
+    // const role = "donor";
+    // const status = "active";
+    const formData = new FormData();
+    formData.append("image", image[0]);
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMAGE_API_URL
+        }`,
+        formData
+      );
+      const image = data.data.display_url;
+
+      await createUser(email, password);
+
+      await updateUserProfile(name, image);
+      navigate("/");
+      toast.success("Successfully Registered");
+      console.log(image);
+      setLoading(false);
+    } catch (err) {
+      console.log(err.message);
+      // toast.error(error);
+      setLoading(false);
+    }
+
+    if (password !== confirmPassword) {
+      return toast.error("Password not matched");
+    }
+    if (password.length < 6) {
+      setError("Password length must be at least 6 chacacters");
+      return;
+    }
+  };
 
   return (
     <div className="flex flex-row-reverse border w-full max-w-sm mx-auto overflow-hidden bg-white lg:max-w-5xl mt-6 mb-10 rounded-2xl shadow-lg">
@@ -126,6 +151,7 @@ const Register = () => {
             </label>
             <input
               type="file"
+              required
               {...register("image")}
               className="file-input file-input-bordered block w-full  text-gray-700 bg-white border rounded-lg  focus:border-primary "
             />
@@ -271,8 +297,19 @@ const Register = () => {
           </div>
 
           <div className="mt-5">
-            <button className="btn w-full font-semibold px-6 py-3 text-sm tracking-wide text-white border border-primary hover:border-primary duration-300 transform bg-primary rounded-lg hover:bg-transparent hover:text-black  hover:scale-105 uppercase">
-              Sign Up
+            <button
+              disabled={loading}
+              className="btn w-full font-semibold  px-6 py-3 text-sm tracking-wide text-white border border-primary hover:border-primary duration-300 transform bg-primary rounded-lg hover:bg-transparent hover:text-black  hover:scale-105 uppercase"
+            >
+              {loading ? (
+                <AiOutlineLoading3Quarters
+                  color="#000"
+                  size={22}
+                  className="animate-spin"
+                />
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </div>
         </form>
