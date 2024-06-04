@@ -12,8 +12,7 @@ import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Register = () => {
-  const { user, createUser, updateUserProfile, loading, setLoading } =
-    useAuth();
+  const { createUser, updateUserProfile, loading, setLoading } = useAuth();
   const [error, setError] = useState("");
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazillas] = useState([]);
@@ -50,9 +49,9 @@ const Register = () => {
       name,
       email,
       image,
-      blood_group,
-      district,
-      upazila,
+      // blood_group,
+      // district,
+      // upazila,
       password,
       confirmPassword,
     } = d;
@@ -60,8 +59,27 @@ const Register = () => {
     // const status = "active";
     const formData = new FormData();
     formData.append("image", image[0]);
+
+    // Validate Password
+    if (password !== confirmPassword) {
+      return setError("Password Not Matched!");
+    }
+
+    if (password.length < 6) {
+      setError("Password must contain at least 6 characters");
+      return;
+    }
+
+    if (!passwordRegex.test(password, confirmPassword)) {
+      setError(
+        "Password must contain at least one uppercase and lowercase letter"
+      );
+      return;
+    }
+
     try {
       setLoading(true);
+
       const { data } = await axios.post(
         `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_IMAGE_API_URL
@@ -73,8 +91,8 @@ const Register = () => {
       await createUser(email, password);
 
       await updateUserProfile(name, image);
-      navigate("/");
       toast.success("Successfully Registered");
+      navigate("/");
       console.log(image);
       setLoading(false);
     } catch (err) {
@@ -256,11 +274,11 @@ const Register = () => {
                 )}
               </span>
             </div>
-            {error ? (
+            {/* {error ? (
               <p className="text-xs text-red-600 font-medium mt-2">{error}</p>
             ) : (
               ""
-            )}
+            )} */}
           </div>
 
           {/*<------- Confirm Password -------> */}

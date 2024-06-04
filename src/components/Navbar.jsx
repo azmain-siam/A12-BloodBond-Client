@@ -5,10 +5,10 @@ import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  console.log(user);
   const handleShowSideNav = () => {
     setOpen(!open);
-    console.log(open);
   };
 
   // NavBar Class
@@ -78,10 +78,10 @@ const Navbar = () => {
                     role="button"
                     className="btn btn-ghost btn-circle avatar"
                   >
-                    <div className="w-10 rounded-full">
+                    <div className="w-14 rounded-full">
                       <img
                         alt="Tailwind CSS Navbar component"
-                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                        src={user.photoURL}
                       />
                     </div>
                   </div>
@@ -89,47 +89,29 @@ const Navbar = () => {
                     tabIndex={0}
                     className="menu menu-sm dropdown-content mt-3 z-[1] p-2 border shadow-lg bg-base-100 rounded-box "
                   >
-                    <div className="px-4 py-3 text-sm text-gray-900">
+                    <div className="px-4 py-3 text-sm text-gray-900 space-y-1">
                       <div>{user.displayName}</div>
-                      <div className="font-medium truncate">{user.email}</div>
+                      <div className="font-semibold truncate">{user.email}</div>
                     </div>
-                    <ul
-                      className="py-2 text-sm text-gray-700"
-                      aria-labelledby="dropdownUserAvatarButton"
-                    >
+                    <hr className="w-[88%] mx-auto" />
+                    <ul className="py-2 font-medium text-sm text-gray-700">
                       <li>
-                        <a
+                        <Link
                           href="#"
-                          className="block px-4 py-2 hover:bg-gray-100 "
+                          className="block px-4 py-3 hover:bg-gray-200 "
                         >
                           Dashboard
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:bg-gray-100"
+                        <button
+                          onClick={logout}
+                          className="block px-4 py-3 hover:bg-gray-200 "
                         >
-                          Settings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:bg-gray-100"
-                        >
-                          Earnings
-                        </a>
+                          Sign Out
+                        </button>
                       </li>
                     </ul>
-                    <div className="py-2">
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Sign out
-                      </a>
-                    </div>
                   </div>
                 </div>
               ) : (

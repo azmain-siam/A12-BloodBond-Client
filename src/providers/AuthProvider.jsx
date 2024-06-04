@@ -3,11 +3,13 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
@@ -36,6 +38,12 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  const logout = () => {
+    setUser("");
+    toast.success("Logged Out");
+    return signOut(auth);
+  };
+
   // const getToken = async (email) => {
   //   const { data } = await axios.post(
   //     `${import.meta.env.VITE_API_URL}/jwt`,
@@ -61,6 +69,7 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     loading,
+    logout,
     setLoading,
     createUser,
     signIn,
