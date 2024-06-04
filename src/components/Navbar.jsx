@@ -8,7 +8,6 @@ import { FaSignOutAlt } from "react-icons/fa";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
-  console.log(user);
   const handleShowSideNav = () => {
     setOpen(!open);
   };
@@ -108,7 +107,7 @@ const Navbar = () => {
                     <ul className="py-2 font-medium text-sm text-gray-700">
                       <li>
                         <Link
-                          href="#"
+                          to={"/dashboard"}
                           className="px-4 py-3 hover:bg-gray-200 flex"
                         >
                           <RiDashboardFill size={19} />
