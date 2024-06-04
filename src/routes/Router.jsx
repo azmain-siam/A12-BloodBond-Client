@@ -8,6 +8,9 @@ import Register from "../pages/Register";
 import Fundings from "../pages/Fundings";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../layouts/Dashboard";
+import DashboardHome from "../components/Dashboard/DashboardHome";
+import Users from "../components/Dashboard/Users";
+import Profile from "../components/Dashboard/Profile";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +50,20 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <DashboardHome />,
+      },
+      {
+        path: "/dashboard/users",
+        element: <Users />,
+      },
+      {
+        path: "/dashboard/profile",
+        element: <Profile />,
+      },
+    ],
   },
 ]);
 
