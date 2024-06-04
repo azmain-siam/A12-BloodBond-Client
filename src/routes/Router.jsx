@@ -5,6 +5,8 @@ import DonationRequests from "../pages/DonationRequests";
 import Blog from "../pages/Blog";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Fundings from "../pages/Fundings";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "/donation-requests",
         element: <DonationRequests />,
+      },
+      {
+        path: "/fundings",
+        element: (
+          <PrivateRoute>
+            <Fundings />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blog",

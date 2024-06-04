@@ -32,6 +32,15 @@ const Navbar = () => {
           Donation Requests
         </NavLink>
       </li>
+      {user ? (
+        <li className="block antialiased leading-normal">
+          <NavLink to={"/fundings"} className={navClass}>
+            Fundings
+          </NavLink>
+        </li>
+      ) : (
+        ""
+      )}
       <li className="block antialiased leading-normal">
         <NavLink to={"/blog"} className={navClass}>
           Blog
@@ -43,13 +52,13 @@ const Navbar = () => {
   const sideNavClass = ({ isActive }) =>
     isActive
       ? "block p-4 text-sm font-semibold bg-blue-50 text-blue-600 rounded"
-      : "block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded";
+      : "block p-4 text-sm font-semibold text-[#28282B] hover:bg-blue-50 hover:text-blue-600 rounded";
 
   return (
-    <div className="grid w-full place-items-center rounded-lg p-6 lg:overflow-visible">
+    <div className="grid min-h-[66px] w-full place-items-center rounded-lg p-6 lg:overflow-visible">
       <div className="-m-6 max-h-[768px] w-[calc(100%+48px)]">
-        <nav className="sticky top-0 z-10 block w-full max-w-full px-4 py-2 bg-white border rounded-none shadow-md h-max border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-3">
-          <div className="flex max-w-[1440px] mx-auto items-center justify-between text-blue-gray-900">
+        <nav className="sticky top-0 z-10 block w-full max-w-full py-2 bg-white border rounded-none shadow-md h-max border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 lg:py-3">
+          <div className="flex max-w-[1440px] w-[93%] md:w-[95%] mx-auto items-center justify-between text-blue-gray-900">
             {/* <----- Hamburger Icon ------> */}
             <div className="flex gap-5 items-center">
               <div className="lg:hidden">
@@ -170,6 +179,15 @@ const Navbar = () => {
                   Donation Requests
                 </NavLink>
               </li>
+              {user ? (
+                <li className="mb-1" onClick={handleShowSideNav}>
+                  <NavLink to={"/fundings"} className={sideNavClass}>
+                    Fundings
+                  </NavLink>
+                </li>
+              ) : (
+                ""
+              )}
               <li className="mb-1" onClick={handleShowSideNav}>
                 <NavLink to={"/blog"} className={sideNavClass}>
                   Blog
