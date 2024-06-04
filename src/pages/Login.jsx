@@ -3,12 +3,45 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import registerLogo from "../assets/register.svg";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Login = () => {
-  const { register } = useForm();
+  const { loading, setLoading, signIn, user } = useAuth();
+  const { register, handleSubmit } = useForm();
   const [showPass, setShowPass] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [navigate, user]);
+
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    try {
+      setLoading(true);
+      await signIn(email, password);
+      toast.success("Successfully Logged In");
+      navigate(location?.state || "/", { replace: true });
+      setLoading(false);
+    } catch (err) {
+      console.log(err.message);
+      setError(err.message);
+      if (err.message == "Firebase: Error (auth/invalid-credential).") {
+        setError(
+          "The email or password you entered is incorrect. Please try again!"
+        );
+      }
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex w-full gap-10 max-w-sm mx-auto border overflow-hidden bg-white rounded-2xl shadow-lg lg:max-w-5xl mt-6 mb-10 pl-10">
       <Helmet>
@@ -38,7 +71,7 @@ const Login = () => {
           <span className="w-1/5 border-b  lg:w-1/4"></span>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-4">
             <label
               className="block mb-2 text-sm font-medium text-gray-600"
@@ -69,7 +102,7 @@ const Login = () => {
               <input
                 id="loggingPassword"
                 className="block w-full px-4 py-3 text-gray-700 bg-white border rounded-lg focus:border-primary focus:ring-opacity-20  focus:outline-none"
-                type="password"
+                type={showPass ? "text" : "password"}
                 required
                 placeholder="Enter Your Password"
                 {...register("password")}
@@ -85,16 +118,27 @@ const Login = () => {
                 )}
               </span>
             </div>
-            {/* {error ? (
+            {error ? (
               <p className="text-xs text-red-600 font-medium mt-2">{error}</p>
             ) : (
               ""
-            )} */}
+            )}
           </div>
 
           <div className="mt-6">
-            <button className="btn w-full font-semibold px-6 py-3 text-sm tracking-wide text-white capitalize border border-primary hover:border-primary duration-300 transform bg-primary rounded-lg hover:bg-transparent hover:text-black hover:scale-105">
-              Sign In
+            <button
+              disabled={loading}
+              className="btn w-full font-semibold px-6 py-3 text-sm tracking-wide text-white uppercase border border-primary hover:border-primary duration-300 transform bg-primary rounded-lg hover:bg-transparent hover:text-black hover:scale-105"
+            >
+              {loading ? (
+                <AiOutlineLoading3Quarters
+                  color="#000"
+                  size={22}
+                  className="animate-spin"
+                />
+              ) : (
+                "Sign In"
+              )}
             </button>
           </div>
         </form>

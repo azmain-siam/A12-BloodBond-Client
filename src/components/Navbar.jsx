@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenuAlt2 } from "react-icons/hi";
 import useAuth from "../hooks/useAuth";
+import { RiDashboardFill } from "react-icons/ri";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -46,7 +48,7 @@ const Navbar = () => {
   return (
     <div className="grid w-full place-items-center rounded-lg p-6 lg:overflow-visible">
       <div className="-m-6 max-h-[768px] w-[calc(100%+48px)]">
-        <nav className="sticky top-0 z-10 block w-full max-w-full px-4 py-2 bg-white border rounded-none shadow-md h-max border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4">
+        <nav className="sticky top-0 z-10 block w-full max-w-full px-4 py-2 bg-white border rounded-none shadow-md h-max border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-3">
           <div className="flex max-w-[1440px] mx-auto items-center justify-between text-blue-gray-900">
             {/* <----- Hamburger Icon ------> */}
             <div className="flex gap-5 items-center">
@@ -98,16 +100,18 @@ const Navbar = () => {
                       <li>
                         <Link
                           href="#"
-                          className="block px-4 py-3 hover:bg-gray-200 "
+                          className="px-4 py-3 hover:bg-gray-200 flex"
                         >
+                          <RiDashboardFill size={19} />
                           Dashboard
                         </Link>
                       </li>
                       <li>
                         <button
                           onClick={logout}
-                          className="block px-4 py-3 hover:bg-gray-200 "
+                          className="flex px-4 py-3 hover:bg-gray-200"
                         >
+                          <FaSignOutAlt size={19} />
                           Sign Out
                         </button>
                       </li>

@@ -12,17 +12,18 @@ import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Register = () => {
-  const { createUser, updateUserProfile, loading, setLoading } = useAuth();
+  const { createUser, updateUserProfile, loading, setLoading, user } =
+    useAuth();
   const [error, setError] = useState("");
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazillas] = useState([]);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate("/");
-  //   }
-  // }, [navigate, user]);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [navigate, user]);
 
   const { register, handleSubmit } = useForm();
 
