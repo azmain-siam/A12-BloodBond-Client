@@ -11,6 +11,7 @@ import Dashboard from "../layouts/Dashboard";
 import DashboardHome from "../components/Dashboard/DashboardHome";
 import Users from "../components/Dashboard/Users";
 import Profile from "../components/Dashboard/Profile";
+import Details from "../pages/Details";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/donation-requests",
         element: <DonationRequests />,
+      },
+      {
+        path: "/details/:id",
+        element: <Details />,
       },
       {
         path: "/fundings",
