@@ -1,0 +1,6 @@
+.react-time-picker__wrapper {
+  border: 1px solid rgb(197, 197, 197) !important;
+  padding: 6px;
+  margin-top: -9px;
+  border-radius: 6px;
+}
