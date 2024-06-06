@@ -9,7 +9,6 @@ import useAuth from "../hooks/useAuth";
 
 const Details = () => {
   const { user } = useAuth();
-  console.log(user);
   const { id } = useParams();
   const axiosCommon = useAxiosCommon();
   const { data: request = {}, isLoading } = useQuery({
@@ -20,10 +19,9 @@ const Details = () => {
     },
   });
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return <LoadingBars />;
   }
-  console.log(request);
 
   return (
     <div className="mt-5 mb-14">
@@ -102,7 +100,7 @@ const Details = () => {
       {/* Details */}
       <div className="bg-white border rounded-lg">
         {/* <----- Requester Info -----> */}
-        <div className="flex items-center px-4 py-3 border-b">
+        <div className="flex items-center px-4 py-3 border-b ">
           <img
             className="h-9 w-9 rounded-full content-center object-cover border"
             src={
