@@ -8,14 +8,19 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import "./TimePicker.css";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CreateRequest = () => {
   const { user } = useAuth();
+  const axiosCommon = useAxiosCommon();
   const [startDate, setStartDate] = useState(new Date());
   const [value, onChange] = useState("10:00");
 
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazillas] = useState([]);
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
 
@@ -31,10 +36,30 @@ const CreateRequest = () => {
       .then((data) => setUpazillas(data));
   }, []);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(startDate);
-    console.log(value);
+  const onSubmit = async (data) => {
+    const requestData = {
+      ...data,
+      donation_date: startDate,
+      donation_time: value,
+      donation_status: "pending",
+      requester_name: user.displayName,
+      requester_email: user.email,
+      requester_img: user.photoURL,
+    };
+
+    console.log(requestData);
+
+    try {
+      const { data } = await axiosCommon.post("/requests", requestData);
+      console.log(data);
+      if (data.insertedId) {
+        toast.success("Successfully Made a Request!");
+        navigate("/dashboard/my-donation-requests");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Try Again");
+    }
   };
 
   if (!user) {
@@ -86,7 +111,7 @@ const CreateRequest = () => {
               placeholder={user.email}
             />
           </div>
-          <div className="col-span-2">
+          <div className="md:col-span-1">
             <label className="block mb-2 text-sm font-medium text-gray-900">
               Recipient Name
             </label>
@@ -104,14 +129,42 @@ const CreateRequest = () => {
               htmlFor="category"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
+              Blood Group
+            </label>
+            <select
+              required
+              {...register("blood_group")}
+              defaultValue={"selected"}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 *:font-medium "
+            >
+              <option value={"selected"} disabled>
+                Select Blood Group
+              </option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+            </select>
+          </div>
+
+          <div className="md:col-span-1">
+            <label
+              htmlFor="category"
+              className="block mb-2 text-sm font-medium text-gray-900 "
+            >
               Recipient District
             </label>
             <select
               required
+              defaultValue={"selected"}
               {...register("recipient_district")}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 *:font-medium "
             >
-              <option selected disabled>
+              <option value={"selected"} disabled>
                 Select District
               </option>
               {districts.map((district) => (
@@ -132,9 +185,10 @@ const CreateRequest = () => {
             <select
               required
               {...register("recipient_upazila")}
+              defaultValue={"selected"}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 *:font-medium "
             >
-              <option selected disabled>
+              <option value={"selected"} disabled>
                 Select Upazila
               </option>
               {upazilas.map((upazila) => (
@@ -216,7 +270,7 @@ const CreateRequest = () => {
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Why blood is needed?"
               required
-              {...register("description")}
+              {...register("request_message")}
             ></textarea>
           </div>
         </div>

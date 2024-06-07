@@ -3,7 +3,6 @@ import { FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const RequestCards = ({ data }) => {
-  console.log(data);
   const {
     recipient_name,
     recipient_district,
@@ -21,10 +20,10 @@ const RequestCards = ({ data }) => {
       </h5>
       <div className="text-sm mb-1 font-medium text-gray-800">
         <p className="flex items-center gap-2">
-          <FaClock size={19} />{" "}
+          <FaClock size={19} />
           <div>
             <p>
-              {donation_date} At {donation_time}
+              {new Date(donation_date).toLocaleDateString()} At {donation_time}
             </p>
           </div>
         </p>
@@ -32,7 +31,7 @@ const RequestCards = ({ data }) => {
 
       <div className="text-sm mb-3 font-medium text-gray-800">
         <p className="flex items-center gap-1">
-          <FaLocationDot size={21} />{" "}
+          <FaLocationDot size={21} />
           <div>
             <p>{hospital_name},</p>
             <p>{recipient_district}</p>

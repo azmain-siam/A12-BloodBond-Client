@@ -23,6 +23,8 @@ const Details = () => {
     return <LoadingBars />;
   }
 
+  console.log(request);
+
   return (
     <div className="mt-5 mb-14">
       <Helmet>
@@ -102,9 +104,9 @@ const Details = () => {
         {/* <----- Requester Info -----> */}
         <div className="flex items-center px-4 py-3 border-b ">
           <img
-            className="h-9 w-9 rounded-full content-center object-cover border"
+            className="size-10 rounded-full content-center object-cover border"
             src={
-              request.recipient_image ||
+              request.requester_img ||
               "https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
             }
           />
@@ -152,7 +154,9 @@ const Details = () => {
               <div className="ml-3 grid md:grid-cols-3 gap-2 text-sm md:text-base">
                 <div className="space-y-2">
                   <p className="font-medium ">Time: {request.donation_time}</p>
-                  <p className="font-medium ">Date: {request.donation_date}</p>
+                  <p className="font-medium ">
+                    Date: {new Date(request.donation_date).toLocaleDateString()}
+                  </p>
                 </div>
               </div>
             </div>
