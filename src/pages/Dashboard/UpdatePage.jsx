@@ -1,28 +1,35 @@
-import DatePicker from "react-datepicker";
-import { useForm } from "react-hook-form";
-import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import LoadingBars from "../LoadingBars";
-import TimePicker from "react-time-picker";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
-import "./TimePicker.css";
+import useAuth from "../../hooks/useAuth";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import LoadingBars from "../../components/LoadingBars";
+import ReactDatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
+import { useQuery } from "@tanstack/react-query";
 
-const CreateRequest = () => {
+const UpdatePage = () => {
   const { user } = useAuth();
+  const { id } = useParams();
+
   const axiosCommon = useAxiosCommon();
-  const [startDate, setStartDate] = useState(new Date());
-  const [value, onChange] = useState("10:00");
 
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazillas] = useState([]);
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["update", id],
+    queryFn: async () => {
+      const { data } = await axiosCommon.get(`/requests/${id}`);
+      return data;
+    },
+  });
+
+  console.log(data);
 
   useEffect(() => {
     fetch("/districts.json")
@@ -36,8 +43,25 @@ const CreateRequest = () => {
       .then((data) => setUpazillas(data));
   }, []);
 
+  const [startDate, setStartDate] = useState(new Date());
+  const [value, onChange] = useState(`10:00`);
+
+  // Set date to the startDate state
+  useEffect(() => {
+    if (data) {
+      setStartDate(data.donation_date);
+    }
+  }, [data]);
+
+  // Set time to the time state
+  useEffect(() => {
+    if (data) {
+      onChange(data.donation_time);
+    }
+  }, [data]);
+
   const onSubmit = async (data) => {
-    const requestData = {
+    const updatedData = {
       ...data,
       donation_date: startDate,
       donation_time: value,
@@ -47,13 +71,13 @@ const CreateRequest = () => {
       requester_img: user.photoURL,
     };
 
-    console.log(requestData);
+    console.log(updatedData);
 
     try {
-      const { data } = await axiosCommon.post("/requests", requestData);
+      const { data } = await axiosCommon.put(`/request/${id}`, updatedData);
       console.log(data);
-      if (data.insertedId) {
-        toast.success("Successfully Made a Request!");
+      if (data.modifiedCount > 0) {
+        toast.success("Updated Successfully!");
         navigate("/dashboard/my-donation-requests");
       }
     } catch (err) {
@@ -62,7 +86,7 @@ const CreateRequest = () => {
     }
   };
 
-  if (!user) {
+  if (isLoading || !user) {
     return (
       <div className="h-[80vh]">
         <LoadingBars />
@@ -78,7 +102,7 @@ const CreateRequest = () => {
       >
         <div>
           <h2 className="mb-6 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl ">
-            Create Donation Request
+            Update Donation Request
           </h2>
         </div>
 
@@ -117,6 +141,7 @@ const CreateRequest = () => {
             </label>
             <input
               type="text"
+              defaultValue={data.recipient_name}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Recipient Name"
               required
@@ -134,7 +159,7 @@ const CreateRequest = () => {
             <select
               required
               {...register("blood_group")}
-              defaultValue={"selected"}
+              defaultValue={data.blood_group}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 *:font-medium "
             >
               <option value={"selected"} disabled>
@@ -160,13 +185,11 @@ const CreateRequest = () => {
             </label>
             <select
               required
-              defaultValue={"selected"}
+              defaultValue={data.recipient_district}
               {...register("recipient_district")}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 *:font-medium "
             >
-              <option value={"selected"} disabled>
-                Select District
-              </option>
+              <option disabled>Select District</option>
               {districts.map((district) => (
                 <option key={district.name} value={district.name}>
                   {district.name}
@@ -185,12 +208,10 @@ const CreateRequest = () => {
             <select
               required
               {...register("recipient_upazila")}
-              defaultValue={"selected"}
+              defaultValue={data.recipient_upazila}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 *:font-medium "
             >
-              <option value={"selected"} disabled>
-                Select Upazila
-              </option>
+              <option disabled>Select Upazila</option>
               {upazilas.map((upazila) => (
                 <option key={upazila.id} value={upazila.name}>
                   {upazila.name}
@@ -205,6 +226,7 @@ const CreateRequest = () => {
             </label>
             <input
               type="text"
+              defaultValue={data.hospital_name}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Ex. Dhaka Medical College Hospital"
               {...register("hospital_name")}
@@ -217,6 +239,7 @@ const CreateRequest = () => {
             </label>
             <input
               type="text"
+              defaultValue={data.full_address_line}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Ex. Zahir Raihan Rd, Dhaka"
               {...register("full_address_line")}
@@ -231,7 +254,7 @@ const CreateRequest = () => {
               Donation Date
             </label>
             <div>
-              <DatePicker
+              <ReactDatePicker
                 wrapperClassName="w-full "
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block py-2.5 w-full font-medium *:font-medium "
                 selected={startDate}
@@ -267,6 +290,7 @@ const CreateRequest = () => {
             </label>
             <textarea
               rows="3"
+              defaultValue={data.request_message}
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Why blood is needed?"
               required
@@ -279,7 +303,7 @@ const CreateRequest = () => {
             type="submit"
             className="btn mt-3 px-12 bg-primary border-primary hover:border-[#28282B] hover:text-[#28282B] text-white uppercase transition-all hover:bg-white duration-300 hover:scale-105"
           >
-            Add post
+            update post
           </button>
         </div>
       </form>
@@ -287,4 +311,4 @@ const CreateRequest = () => {
   );
 };
 
-export default CreateRequest;
+export default UpdatePage;

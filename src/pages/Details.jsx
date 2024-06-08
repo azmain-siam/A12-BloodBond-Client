@@ -14,7 +14,7 @@ const Details = () => {
   const { data: request = {}, isLoading } = useQuery({
     queryKey: ["request", id],
     queryFn: async () => {
-      const { data } = await axiosCommon.get(`/request/${id}`);
+      const { data } = await axiosCommon.get(`/requests/${id}`);
       return data;
     },
   });

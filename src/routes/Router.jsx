@@ -14,6 +14,7 @@ import Profile from "../components/Dashboard/Profile";
 import Details from "../pages/Details";
 import MyRequests from "../components/Dashboard/MyRequests";
 import CreateRequest from "../components/Dashboard/CreateRequest";
+import UpdatePage from "../pages/Dashboard/UpdatePage";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/create-donation-request",
         element: <CreateRequest />,
+      },
+      {
+        path: "/dashboard/update/:id",
+        element: <UpdatePage />,
       },
     ],
   },

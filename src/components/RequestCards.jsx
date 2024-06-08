@@ -1,6 +1,7 @@
 import { FaLocationDot } from "react-icons/fa6";
 import { FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const RequestCards = ({ data }) => {
   const {
@@ -66,3 +67,7 @@ const RequestCards = ({ data }) => {
 };
 
 export default RequestCards;
+
+RequestCards.propTypes = {
+  data: PropTypes.object,
+};
