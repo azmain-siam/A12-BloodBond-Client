@@ -27,7 +27,8 @@
     "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.23.1",
     "react-time-picker": "^7.0.0",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "sweetalert2": "^11.11.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

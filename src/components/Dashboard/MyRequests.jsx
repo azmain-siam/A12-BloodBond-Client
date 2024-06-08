@@ -6,18 +6,51 @@ import LoadingBars from "../LoadingBars";
 import { AiOutlineEdit } from "react-icons/ai";
 import { LuEye } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const MyRequests = () => {
   const { user } = useAuth();
   const axiosCommon = useAxiosCommon();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["request"],
     queryFn: async () => {
       const { data } = await axiosCommon.get(`/my-requests/${user.email}`);
       return data;
     },
   });
+
+  const handleDelete = (id) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(id);
+          const { data } = await axiosCommon.delete(`/my-requests/${id}`);
+          console.log(data);
+          if (data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your request has been deleted.",
+              icon: "success",
+            });
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      toast.error("There is a problem deleting request!");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -26,8 +59,6 @@ const MyRequests = () => {
       </div>
     );
   }
-
-  console.log(data);
 
   return (
     <div>
@@ -86,6 +117,7 @@ const MyRequests = () => {
                 <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                   <div>
                     <button
+                      onClick={() => handleDelete(d._id)}
                       type="button"
                       title="Delete"
                       className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 py-2.5 me-2 mb-2"
