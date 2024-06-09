@@ -1,12 +1,15 @@
 import useAuth from "../../hooks/useAuth";
+import useRole from "../../hooks/useRole";
 
 const DashboardHome = () => {
   const { user } = useAuth();
 
+  const [role] = useRole();
+  console.log(role);
+
   if (!user) {
     return;
   }
-  console.log(user);
 
   return (
     <div>

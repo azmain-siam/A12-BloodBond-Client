@@ -8,13 +8,12 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import "./TimePicker.css";
-import useAxiosCommon from "../../hooks/useAxiosCommon";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { axiosSecure } from "../../hooks/useAxiosSecure";
 
 const CreateRequest = () => {
   const { user } = useAuth();
-  const axiosCommon = useAxiosCommon();
   const [startDate, setStartDate] = useState(new Date());
   const [value, onChange] = useState("10:00");
 
@@ -50,7 +49,7 @@ const CreateRequest = () => {
     console.log(requestData);
 
     try {
-      const { data } = await axiosCommon.post("/requests", requestData);
+      const { data } = await axiosSecure.post("/requests", requestData);
       console.log(data);
       if (data.insertedId) {
         toast.success("Successfully Made a Request!");

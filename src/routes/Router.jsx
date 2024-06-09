@@ -16,6 +16,8 @@ import MyRequests from "../components/Dashboard/MyRequests";
 import CreateRequest from "../components/Dashboard/CreateRequest";
 import UpdatePage from "../pages/Dashboard/UpdatePage";
 import AdminRoute from "./AdminRoute";
+import AllRequests from "../components/Dashboard/AllRequests";
+import ContentManagement from "../components/Dashboard/ContentManagement";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +75,22 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <Users />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-blood-donation-request",
+        element: (
+          <AdminRoute>
+            <AllRequests />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/content-management",
+        element: (
+          <AdminRoute>
+            <ContentManagement />
           </AdminRoute>
         ),
       },

@@ -1,4 +1,3 @@
-import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { FaRegTrashAlt } from "react-icons/fa";
 import LoadingBars from "../LoadingBars";
@@ -9,13 +8,11 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
 
-const MyRequests = () => {
-  const { user } = useAuth();
-
+const AllRequests = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["request"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/my-requests/${user.email}`);
+      const { data } = await axiosSecure.get(`/requests`);
       return data;
     },
   });
@@ -151,4 +148,4 @@ const MyRequests = () => {
   );
 };
 
-export default MyRequests;
+export default AllRequests;
