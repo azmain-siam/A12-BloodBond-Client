@@ -1,24 +1,9 @@
 import useAuth from "../../hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosCommon from "../../hooks/useAxiosCommon";
 
 const DashboardHome = () => {
   const { user } = useAuth();
-  const axiosCommon = useAxiosCommon();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const { data } = await axiosCommon.get("/users");
-      return data;
-    },
-  });
-  console.log(data);
-
-  // const admin = data.find((d) => d.role === "admin");
-  // console.log("admin", admin);
-
-  if (isLoading || !user) {
+  if (!user) {
     return;
   }
   console.log(user);

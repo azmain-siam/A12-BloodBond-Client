@@ -15,6 +15,7 @@ import Details from "../pages/Details";
 import MyRequests from "../components/Dashboard/MyRequests";
 import CreateRequest from "../components/Dashboard/CreateRequest";
 import UpdatePage from "../pages/Dashboard/UpdatePage";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +58,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
@@ -65,7 +70,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/users",
-        element: <Users />,
+        element: (
+          <AdminRoute>
+            <Users />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/profile",

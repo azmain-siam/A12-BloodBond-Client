@@ -4,8 +4,12 @@ import { FaUser } from "react-icons/fa";
 import { RiMenu2Line } from "react-icons/ri";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { IoIosCreate } from "react-icons/io";
+import useAdmin from "../../hooks/useAdmin";
 
 const DashboardNav = () => {
+  // const [isAdmin] = useAdmin();
+  // // console.log(isAdmin);
+
   return (
     <div>
       <button
