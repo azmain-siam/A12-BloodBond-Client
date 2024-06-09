@@ -10,6 +10,7 @@ import registerLogo from "../assets/login.svg";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { axiosCommon } from "../hooks/useAxiosCommon";
 
 const Register = () => {
   const { createUser, updateUserProfile, loading, setLoading, user } =
@@ -50,9 +51,9 @@ const Register = () => {
       name,
       email,
       image,
-      // blood_group,
-      // district,
-      // upazila,
+      blood_group,
+      district,
+      upazila,
       password,
       confirmPassword,
     } = d;
@@ -92,6 +93,21 @@ const Register = () => {
       await createUser(email, password);
 
       await updateUserProfile(name, image);
+
+      // User Info save to database
+      const userInfo = {
+        name,
+        email,
+        image,
+        blood_group,
+        district,
+        upazila,
+        role: "donor",
+        status: "active",
+      };
+      const { data: userData } = await axiosCommon.post("/users", userInfo);
+      console.log(userData);
+
       toast.success("Successfully Registered");
       navigate("/");
       console.log(image);

@@ -10,11 +10,14 @@ import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
+import useAxiosCommon from "../hooks/useAxiosCommon";
 
 export const AuthContext = createContext(null);
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const axiosCommon = useAxiosCommon();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -57,9 +60,17 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setLoading(true);
       setUser(currentUser);
-      // if (currentUser) {
-      //   getToken(currentUser.email);
-      // }
+      // Get and Set token to the localStorage
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        axiosCommon.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("token", res.data.token);
+          }
+        });
+      } else {
+        localStorage.removeItem("token");
+      }
       setLoading(false);
     });
     return () => {
