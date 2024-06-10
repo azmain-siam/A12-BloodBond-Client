@@ -102,9 +102,9 @@ const Profile = () => {
                 src={user.photoURL}
                 alt="Bordered avatar"
               />
-              <button className="btn btn-info btn-sm rounded-full -mt-4 mb-3 capitalize">
+              <div className="bg-[#00B3FB] cursor-default py-1 px-4 text-sm font-semibold rounded-full -mt-4 mb-3 capitalize">
                 {role}
-              </button>
+              </div>
               <h3 className="text-2xl font-semibold">{user.displayName}</h3>
               <p className="text-lg text-gray-500 mt-1">{user.email}</p>
 
@@ -146,17 +146,19 @@ const Profile = () => {
                     {...register("name")}
                   />
                 </div>
-                <div className="mt-3">
-                  <label className="block mb-2 text-sm font-medium text-gray-600">
-                    Photo URL
-                  </label>
-                  <input
-                    type="file"
-                    disabled={edit}
-                    {...register("image")}
-                    className="file-input file-input-bordered block w-full  text-gray-700 bg-white border rounded-lg  focus:border-primary "
-                  />
-                </div>
+                {edit || (
+                  <div className="mt-3">
+                    <label className="block mb-2 text-sm font-medium text-gray-600">
+                      Photo URL
+                    </label>
+                    <input
+                      type="file"
+                      disabled={edit}
+                      {...register("image")}
+                      className="file-input file-input-bordered block w-full  text-gray-700 bg-white border rounded-lg  focus:border-primary "
+                    />
+                  </div>
+                )}
 
                 {/*<------------ Upozilla & District ------------->*/}
 
