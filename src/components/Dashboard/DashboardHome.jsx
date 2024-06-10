@@ -23,20 +23,11 @@ const DashboardHome = () => {
 
   return (
     <div>
-      {role === "admin" ? <AdminDashboardHome /> : <DonorHome />}
+      {role === "admin" && <AdminDashboardHome />}
 
-      {role === "volunteer" && (
-        <div className="card w-full bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">Welcome, {user?.displayName}!</h2>
-            <p>
-              We are glad to see you back. Here you can manage your blood
-              donation requests, track your donation history, and get the latest
-              updates on blood donation campaigns!
-            </p>
-          </div>
-        </div>
-      )}
+      {role === "donor" && <DonorHome />}
+
+      {role === "volunteer" && <AdminDashboardHome />}
     </div>
   );
 };

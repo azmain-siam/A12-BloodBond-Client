@@ -3,7 +3,7 @@ import useAuth from "../hooks/useAuth";
 import PropTypes from "prop-types";
 import useRole from "../hooks/useRole";
 
-const AdminRoute = ({ children }) => {
+const VolunteerRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const [role, isLoading] = useRole();
   const location = useLocation();
@@ -12,15 +12,15 @@ const AdminRoute = ({ children }) => {
     return;
   }
 
-  if (user && role === "admin") {
+  if (user && role === "volunteer") {
     return children;
   }
 
   return <Navigate to={"/login"} state={location?.pathname || "/"}></Navigate>;
 };
 
-export default AdminRoute;
+export default VolunteerRoute;
 
-AdminRoute.propTypes = {
+VolunteerRoute.propTypes = {
   children: PropTypes.node,
 };

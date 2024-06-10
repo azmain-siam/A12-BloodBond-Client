@@ -11,8 +11,6 @@ const Users = () => {
   const axiosSecure = useAxiosSecure();
   const { loading } = useAuth();
 
-  const [status, setStatus] = useState("");
-
   const {
     data: users = [],
     isLoading,
@@ -59,20 +57,19 @@ const Users = () => {
     }
   };
 
-  // const handleStatus = async (user, updateStatus) => {
-  //   setUser(user);
-  //   setStatus(!status);
-  //   const updatedStatus = {
-  //     status: updateStatus,
-  //   };
-  //   console.log(updatedStatus);
-  //   // try {
-  //   //   await mutateAsync(updatedStatus);
-  //   // } catch (err) {
-  //   //   console.log(err);
-  //   //   toast.error(err.message);
-  //   // }
-  // };
+  const handleStatus = async (user, updateStatus) => {
+    setUser(user);
+    const updatedStatus = {
+      status: updateStatus,
+    };
+    console.log(updatedStatus);
+    try {
+      await mutateAsync(updatedStatus);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  };
 
   if (loading || isLoading) {
     return (
@@ -138,13 +135,27 @@ const Users = () => {
                   {user.status}
                 </th>
                 <th className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap">
-                  <button
-                    onClick={() => handleStatus(user, user.status)}
-                    disabled={loggedInUser.email === user.email}
-                    className="btn btn-neutral capitalize btn-sm btn-error text-white"
-                  >
-                    {user.status === "active" ? "block" : "active"}
-                  </button>
+                  <div className="dropdown dropdown-end">
+                    <button
+                      tabIndex={0}
+                      disabled={loggedInUser.email === user.email}
+                      role="button"
+                      className="btn btn-sm btn-error text-white m-1"
+                    >
+                      Change Status
+                    </button>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 border rounded-box w-32"
+                    >
+                      <li onClick={() => handleStatus(user, "active")}>
+                        <a>Active</a>
+                      </li>
+                      <li onClick={() => handleStatus(user, "block")}>
+                        <a>Block</a>
+                      </li>
+                    </ul>
+                  </div>
                 </th>
                 <th className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap space-x-2">
                   <div className="dropdown dropdown-end">
@@ -166,7 +177,7 @@ const Users = () => {
                       <li onClick={() => handleUpdateUser(user, "donor")}>
                         <a>Donor</a>
                       </li>
-                      <li onClick={() => handleUpdateUser(user, "vulunteer")}>
+                      <li onClick={() => handleUpdateUser(user, "volunteer")}>
                         <a>Volunteer</a>
                       </li>
                     </ul>

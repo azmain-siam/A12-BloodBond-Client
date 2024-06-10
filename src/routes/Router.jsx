@@ -80,11 +80,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/all-blood-donation-request",
-        element: (
-          <AdminRoute>
-            <AllRequests />
-          </AdminRoute>
-        ),
+        element: <AllRequests />,
       },
       {
         path: "/dashboard/content-management",

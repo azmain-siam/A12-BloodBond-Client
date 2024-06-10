@@ -5,6 +5,7 @@ import { RiMenu2Line } from "react-icons/ri";
 import useRole from "../../hooks/useRole";
 import DonorMenu from "./Menu/DonorMenu";
 import AdminMenu from "./Menu/AdminMenu";
+import VolunteerMenu from "./Menu/VolunteerMenu";
 
 const DashboardNav = () => {
   // const [isAdmin] = useAdmin();
@@ -59,6 +60,7 @@ const DashboardNav = () => {
 
             {role === "donor" && <DonorMenu />}
             {role === "admin" && <AdminMenu />}
+            {role === "volunteer" && <VolunteerMenu />}
           </ul>
 
           {/* Bottom Nav */}

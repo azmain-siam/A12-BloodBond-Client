@@ -58,7 +58,7 @@ const AllRequests = () => {
   return (
     <div>
       <h2 className="mb-6 mt-1 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl ">
-        My Donation Requests
+        All Donation Requests
       </h2>
 
       <div className="relative overflow-x-auto">
