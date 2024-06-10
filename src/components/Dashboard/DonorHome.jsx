@@ -1,26 +1,30 @@
-import useAuth from "../../hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import { FaRegTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { axiosSecure } from "../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 import LoadingBars from "../LoadingBars";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../hooks/useAuth";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { LuEye } from "react-icons/lu";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
-import { axiosSecure } from "../../hooks/useAxiosSecure";
 
-const MyRequests = () => {
+const DonorHome = () => {
   const { user } = useAuth();
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["request"],
+  // const [selectRequests, setSelectRequests] = useState([]);
+
+  const {
+    data,
+    isLoading: dataLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["request", user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/my-requests/${user.email}`);
+      const { data } = await axiosSecure.get(`/my-requests/${user?.email}`);
       return data;
     },
   });
-
-
 
   const handleDelete = (id) => {
     try {
@@ -52,7 +56,7 @@ const MyRequests = () => {
     }
   };
 
-  if (isLoading) {
+  if (dataLoading) {
     return (
       <div className="h-[80vh]">
         <LoadingBars />
@@ -60,13 +64,22 @@ const MyRequests = () => {
     );
   }
 
+  if (!user) {
+    return;
+  }
   return (
     <div>
-      <h2 className="mb-6 mt-1 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl ">
-        My Donation Requests
-      </h2>
-
-      <div className="relative overflow-x-auto">
+      <div className="card w-full bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title">Welcome, {user?.displayName}!</h2>
+          <p>
+            We are glad to see you back. Here you can manage your blood donation
+            requests, track your donation history, and get the latest updates on
+            blood donation campaigns!
+          </p>
+        </div>
+      </div>
+      <div className="relative overflow-x-auto mt-5">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100">
             <tr>
@@ -94,7 +107,7 @@ const MyRequests = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((d) => (
+            {data.slice(0, 3).map((d) => (
               <tr key={d._id} className="bg-white">
                 <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                   {d.recipient_name}
@@ -148,9 +161,15 @@ const MyRequests = () => {
             ))}
           </tbody>
         </table>
+        <Link
+          className="flex justify-center mt-4"
+          to={"/dashboard/my-donation-requests"}
+        >
+          <button className="btn btn-info">View All My Requests</button>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default MyRequests;
+export default DonorHome;

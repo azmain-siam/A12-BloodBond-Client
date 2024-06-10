@@ -91,10 +91,8 @@ const Profile = () => {
 
   return (
     <div className="flex justify-center lg:w-[70%] mx-auto">
-      <div className="p-2 md:p-4">
+      <div className="p-2 md:p-4 border rounded-xl shadow-lg">
         <div className="w-full px-6 pb-8 mt-8 sm:max-w-xl sm:rounded-lg">
-          <h2 className="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
-
           <div className="grid max-w-2xl mx-auto mt-8">
             <div className="flex flex-col justify-center items-center sm:flex-col ">
               <img
@@ -107,21 +105,6 @@ const Profile = () => {
               </div>
               <h3 className="text-2xl font-semibold">{user.displayName}</h3>
               <p className="text-lg text-gray-500 mt-1">{user.email}</p>
-
-              {/* <div className="flex flex-col space-y-5 sm:ml-8">
-                <button
-                  type="button"
-                  className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 "
-                >
-                  Change picture
-                </button>
-                <button
-                  type="button"
-                  className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 "
-                >
-                  Delete picture
-                </button>
-              </div> */}
             </div>
 
             <div className="items-center mt-8 sm:mt-8 text-[#202142]">
@@ -224,7 +207,7 @@ const Profile = () => {
                 </div>
 
                 <div className="mt-3">
-                  <label className="mb-2 text-sm font-medium text-gray-600">
+                  <label className="mb-2 inline-block text-sm font-medium text-gray-600">
                     Blood Group
                   </label>
                   {edit ? (
@@ -239,7 +222,7 @@ const Profile = () => {
                     <select
                       defaultValue={loggedInUser.blood_group}
                       disabled={edit}
-                      className="select select-bordered w-full rounded-lg  focus:border-primary focus:ring-opacity-20 focus:outline-none"
+                      className="select select-bordered w-full rounded-lg focus:border-primary focus:ring-opacity-20 focus:outline-none"
                       {...register("blood_group")}
                     >
                       <option disabled value="selected">

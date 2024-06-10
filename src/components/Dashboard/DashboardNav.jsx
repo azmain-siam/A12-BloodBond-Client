@@ -11,7 +11,6 @@ const DashboardNav = () => {
   // // console.log(isAdmin);
 
   const [role] = useRole();
-  console.log(role);
 
   return (
     <div>
