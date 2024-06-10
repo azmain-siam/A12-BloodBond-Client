@@ -1,16 +1,23 @@
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import LoadingBars from "../LoadingBars";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Users = () => {
+  const { user: loggedInUser } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { loading } = useAuth();
 
   const [status, setStatus] = useState("");
 
-  const { data: users = [], isLoading } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -18,9 +25,54 @@ const Users = () => {
     },
   });
 
-  const handleStatus = (status) => {
-    console.log(status);
+  const [user, setUser] = useState("");
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async (role) => {
+      const { data } = await axiosSecure.patch(
+        `/user/update/${user.email}`,
+        role
+      );
+      return data;
+    },
+    onSuccess: () => {
+      refetch();
+      Swal.fire({
+        title: "Success!",
+        text: "Updated Successfully!",
+        icon: "success",
+      });
+    },
+  });
+
+  const handleUpdateUser = async (user, role) => {
+    setUser(user);
+    const updatedRole = {
+      role: role,
+    };
+    console.log(updatedRole);
+    try {
+      await mutateAsync(updatedRole);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
   };
+
+  // const handleStatus = async (user, updateStatus) => {
+  //   setUser(user);
+  //   setStatus(!status);
+  //   const updatedStatus = {
+  //     status: updateStatus,
+  //   };
+  //   console.log(updatedStatus);
+  //   // try {
+  //   //   await mutateAsync(updatedStatus);
+  //   // } catch (err) {
+  //   //   console.log(err);
+  //   //   toast.error(err.message);
+  //   // }
+  // };
 
   if (loading || isLoading) {
     return (
@@ -87,7 +139,8 @@ const Users = () => {
                 </th>
                 <th className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap">
                   <button
-                    onClick={() => handleStatus(user.status)}
+                    onClick={() => handleStatus(user, user.status)}
+                    disabled={loggedInUser.email === user.email}
                     className="btn btn-neutral capitalize btn-sm btn-error text-white"
                   >
                     {user.status === "active" ? "block" : "active"}
@@ -95,24 +148,25 @@ const Users = () => {
                 </th>
                 <th className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap space-x-2">
                   <div className="dropdown dropdown-end">
-                    <div
+                    <button
                       tabIndex={0}
+                      disabled={loggedInUser.email === user.email}
                       role="button"
                       className="btn btn-sm btn-success text-white m-1"
                     >
                       Change Role
-                    </div>
+                    </button>
                     <ul
                       tabIndex={0}
                       className="dropdown-content z-[1] menu p-2 shadow bg-base-100 border rounded-box w-32"
                     >
-                      <li>
+                      <li onClick={() => handleUpdateUser(user, "admin")}>
                         <a>Admin</a>
                       </li>
-                      <li>
+                      <li onClick={() => handleUpdateUser(user, "donor")}>
                         <a>Donor</a>
                       </li>
-                      <li>
+                      <li onClick={() => handleUpdateUser(user, "vulunteer")}>
                         <a>Volunteer</a>
                       </li>
                     </ul>
