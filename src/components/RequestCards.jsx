@@ -12,13 +12,17 @@ const RequestCards = ({ data }) => {
     donation_time,
     request_message,
     _id,
+    blood_group,
   } = data;
 
   return (
     <div className="max-w-md flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow ">
       <div className="flex-1">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 flex gap-2 items-center">
           {recipient_name}
+          <span className="bg-red-100 text-red-700 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
+            {blood_group}
+          </span>
         </h5>
         <div className="text-sm mb-1 font-medium text-gray-800">
           <div className="flex items-center gap-2">

@@ -103,7 +103,18 @@ const Profile = () => {
               <div className="bg-[#00B3FB] cursor-default py-1 px-4 text-sm font-semibold rounded-full -mt-4 mb-3 capitalize">
                 {role}
               </div>
-              <h3 className="text-2xl font-semibold">{user.displayName}</h3>
+              <h3 className="text-2xl font-semibold flex gap-2 items-center">
+                {user.displayName}
+                {loggedInUser.status === "blocked" ? (
+                  <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
+                    Blocked
+                  </span>
+                ) : (
+                  <span className="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
+                    Active
+                  </span>
+                )}
+              </h3>
               <p className="text-lg text-gray-500 mt-1">{user.email}</p>
             </div>
 

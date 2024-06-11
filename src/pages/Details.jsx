@@ -1,13 +1,14 @@
 import { Link, useParams } from "react-router-dom";
 import useAxiosCommon from "../hooks/useAxiosCommon";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import LoadingBars from "../components/LoadingBars";
 import { Helmet } from "react-helmet";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaClock } from "react-icons/fa6";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Details = () => {
   const { user } = useAuth();
@@ -23,21 +24,26 @@ const Details = () => {
     },
   });
 
-  // const { mutateAsync } = useMutation({
-  //   mutationFn: async (donor) => {
-  //     const { data } = await axiosSecure.patch(
-  //       `/requests/${request?._id}`,
-  //       donor
-  //     );
-  //     return data;
-  //   },
-  //   onSuccess: () => {
-  //     refetch();
-  //     toast.success("Donate request sent!");
-  //   },
-  // });
+  const { data: currentUser, isLoading: userLoading } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const { data } = await axiosCommon(`/user/${user?.email}`);
+      return data;
+    },
+  });
+
+  console.log(currentUser);
 
   const handleDonate = async (id) => {
+    if (request.requester_email === user.email) {
+      return toast.error("You can't request on your own post!");
+    }
+    if (request.donation_status === "in progress") {
+      return toast.error("Status is In-Progress");
+    }
+    if (currentUser.status === "blocked") {
+      return toast.error("You are temporarily blocked!");
+    }
     const updatedRequest = {
       ...request,
       donation_status: "in progress",
@@ -49,19 +55,29 @@ const Details = () => {
     };
 
     delete updatedRequest._id;
-    
+
     try {
       const { data } = await axiosSecure.patch(
         `/request/update/${id}`,
         updatedRequest
       );
       console.log(data);
+      if (data.modifiedCount > 0) {
+        Swal.fire({
+          title: "Good job!",
+          text: "You clicked the button!",
+          icon: "success",
+        });
+      }
+      if (data?.modifiedCount === 0) {
+        toast.success("You have already requested!");
+      }
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  if (isLoading || !user) {
+  if (isLoading || !user || userLoading) {
     return <LoadingBars />;
   }
 

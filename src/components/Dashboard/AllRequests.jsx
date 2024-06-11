@@ -144,43 +144,6 @@ const AllRequests = () => {
                 </th>
                 <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                   <div>
-                    <div className="dropdown dropdown-end">
-                      <button
-                        tabIndex={0}
-                        role="button"
-                        title="Change Status"
-                        className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-2.5 py-2.5 me-2 mb-2"
-                      >
-                        <MdOutlinePublishedWithChanges />
-                      </button>
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 border rounded-box w-32"
-                      >
-                        <li
-                          onClick={() =>
-                            handleDonateStatus(d, d._id, "pending")
-                          }
-                        >
-                          <a>Pending</a>
-                        </li>
-                        <li
-                          onClick={() =>
-                            handleDonateStatus(d, d._id, "in progress")
-                          }
-                        >
-                          <a>In Progress</a>
-                        </li>
-                        <li
-                          onClick={() =>
-                            handleDonateStatus(d, d._id, "complete")
-                          }
-                        >
-                          <a>Complete</a>
-                        </li>
-                      </ul>
-                    </div>
-
                     {role === "admin" && (
                       <>
                         <button
@@ -210,6 +173,37 @@ const AllRequests = () => {
                           </button>
                         </Link>
                       </>
+                    )}
+                    {d.donor && (
+                      <div className="dropdown dropdown-top dropdown-end">
+                        <button
+                          tabIndex={0}
+                          role="button"
+                          title="Change Status"
+                          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-2.5 py-2.5 me-2 mb-2"
+                        >
+                          <MdOutlinePublishedWithChanges />
+                        </button>
+                        <ul
+                          tabIndex={0}
+                          className="dropdown-content font-bold z-[1] menu p-2 shadow bg-base-100 border rounded-box w-32"
+                        >
+                          <li
+                            onClick={() =>
+                              handleDonateStatus(d, d._id, "pending")
+                            }
+                          >
+                            <a className="text-red-500">Cancel</a>
+                          </li>
+                          <li
+                            onClick={() =>
+                              handleDonateStatus(d, d._id, "completed")
+                            }
+                          >
+                            <a className="text-green-600">Complete</a>
+                          </li>
+                        </ul>
+                      </div>
                     )}
                   </div>
                 </th>

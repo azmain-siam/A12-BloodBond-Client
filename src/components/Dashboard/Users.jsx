@@ -151,7 +151,7 @@ const Users = () => {
                       <li onClick={() => handleStatus(user, "active")}>
                         <a>Active</a>
                       </li>
-                      <li onClick={() => handleStatus(user, "block")}>
+                      <li onClick={() => handleStatus(user, "blocked")}>
                         <a>Block</a>
                       </li>
                     </ul>
