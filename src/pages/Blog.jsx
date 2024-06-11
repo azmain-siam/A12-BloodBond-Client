@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosCommon from "../hooks/useAxiosCommon";
 import { Link } from "react-router-dom";
+import LoadingBars from "../components/LoadingBars";
 
 const Blog = () => {
   const axiosCommon = useAxiosCommon();
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
       const { data } = await axiosCommon.get("/blogs");
@@ -13,12 +14,15 @@ const Blog = () => {
     },
   });
 
-  const publishedBlogs = data.filter((blog) => blog.status === "published");
+  if (isLoading) {
+    return <LoadingBars />;
+  }
+  const publishedBlogs = data?.filter((blog) => blog?.status === "published");
   console.log(publishedBlogs);
 
   console.log(data);
   return (
-    <div>
+    <div className="mb-10">
       <nav className="flex mb-4" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
           <li className="inline-flex items-center">
@@ -84,7 +88,7 @@ const Blog = () => {
                 {blog.content.slice(0, 300)}...
               </p>
               <Link
-                href="#"
+                to={`/blog/details/${blog._id}`}
                 className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
               >
                 Read more

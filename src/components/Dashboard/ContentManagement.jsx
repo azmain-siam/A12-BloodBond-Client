@@ -4,11 +4,13 @@ import { axiosSecure } from "../../hooks/useAxiosSecure";
 import LoadingBars from "../LoadingBars";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useRole from "../../hooks/useRole";
 
 const ContentManagement = () => {
+  const [role, isLoading] = useRole();
   const {
     data: blogs,
-    isLoading,
+    isLoading: blogsLoading,
     refetch,
   } = useQuery({
     queryKey: ["blogs"],
@@ -46,7 +48,19 @@ const ContentManagement = () => {
     }
   };
 
-  if (isLoading) {
+  const handleDelete = async (blog) => {
+    try {
+      const { data } = await axiosSecure.delete(`/blog/${blog._id}`);
+      if (data.deletedCount > 0) {
+        refetch();
+        toast.success("Deleted Successfully!");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (blogsLoading) {
     return <LoadingBars />;
   }
 
@@ -74,9 +88,17 @@ const ContentManagement = () => {
               <th scope="col" className="px-6 py-3 rounded-e-lg">
                 Status
               </th>
-              <th scope="col" className="px-6 py-3 rounded-e-lg">
-                Manage blog
-              </th>
+
+              {role === "admin" && (
+                <th scope="col" className="px-6 py-3 rounded-e-lg">
+                  Manage status
+                </th>
+              )}
+              {role === "admin" && (
+                <th scope="col" className="px-6 py-3 rounded-e-lg">
+                  Actions
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -93,28 +115,46 @@ const ContentManagement = () => {
                   />
                 </td>
                 <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  {blog.title}
+                  <Link
+                    className="hover:underline underline-offset-[4px]"
+                    to={`/blog/details/${blog._id}`}
+                  >
+                    {blog.title}
+                  </Link>
                 </th>
                 <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap">
                   {blog.status}
                 </th>
-                <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap">
-                  {blog.status === "draft" ? (
+                {role === "admin" && (
+                  <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap flex gap-2">
+                    {blog.status === "draft" ? (
+                      <button
+                        onClick={() => handleUpdateStatus(blog, "published")}
+                        className="btn btn-sm btn-success text-white"
+                      >
+                        Publish
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleUpdateStatus(blog, "draft")}
+                        className="btn btn-sm btn-info text-white"
+                      >
+                        Unpublish
+                      </button>
+                    )}
+                  </th>
+                )}
+
+                {role === "admin" && (
+                  <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap">
                     <button
-                      onClick={() => handleUpdateStatus(blog, "published")}
-                      className="btn btn-sm btn-success text-white"
-                    >
-                      Publish
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleUpdateStatus(blog, "draft")}
+                      onClick={() => handleDelete(blog)}
                       className="btn btn-sm btn-error text-white"
                     >
-                      Unpublish
+                      Delete
                     </button>
-                  )}
-                </th>
+                  </th>
+                )}
               </tr>
             ))}
           </tbody>

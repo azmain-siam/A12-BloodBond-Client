@@ -20,6 +20,7 @@ import ContentManagement from "../components/Dashboard/ContentManagement";
 import Search from "../pages/Search";
 import FundingPage from "../pages/FundingPage";
 import AddBlog from "../pages/Dashboard/AddBlog";
+import BlogDetails from "../pages/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/blog/details/:id",
+        element: <BlogDetails />,
       },
       {
         path: "/login",
