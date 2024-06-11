@@ -1,16 +1,20 @@
 import { Link, useParams } from "react-router-dom";
 import useAxiosCommon from "../hooks/useAxiosCommon";
-import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import LoadingBars from "../components/LoadingBars";
 import { Helmet } from "react-helmet";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaClock } from "react-icons/fa6";
 import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Details = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const axiosCommon = useAxiosCommon();
+  const axiosSecure = useAxiosSecure();
+
   const { data: request = {}, isLoading } = useQuery({
     queryKey: ["request", id],
     queryFn: async () => {
@@ -19,11 +23,47 @@ const Details = () => {
     },
   });
 
+  // const { mutateAsync } = useMutation({
+  //   mutationFn: async (donor) => {
+  //     const { data } = await axiosSecure.patch(
+  //       `/requests/${request?._id}`,
+  //       donor
+  //     );
+  //     return data;
+  //   },
+  //   onSuccess: () => {
+  //     refetch();
+  //     toast.success("Donate request sent!");
+  //   },
+  // });
+
+  const handleDonate = async (id) => {
+    const updatedRequest = {
+      ...request,
+      donation_status: "in progress",
+      donor: {
+        donor_name: user.displayName,
+        donor_email: user.email,
+        donor_img: user.photoURL,
+      },
+    };
+
+    delete updatedRequest._id;
+    
+    try {
+      const { data } = await axiosSecure.patch(
+        `/request/update/${id}`,
+        updatedRequest
+      );
+      console.log(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   if (isLoading || !user) {
     return <LoadingBars />;
   }
-
-  console.log(request);
 
   return (
     <div className="mt-5 mb-14">
@@ -181,7 +221,7 @@ const Details = () => {
           <div className="flex justify-center">
             {/* Open the modal using document.getElementById('ID').showModal() method */}
             <button
-              className="items-center mt-5 justify-center px-10 py-3 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none "
+              className="items-center mt-5 justify-center px-10 py-3 text-base font-medium leading-6 text-white whitespace-no-wrap bg-red-600 border border-red-700 rounded-md shadow-sm hover:bg-red-700 focus:outline-none "
               onClick={() => document.getElementById("my_modal_2").showModal()}
             >
               Donate
@@ -196,7 +236,10 @@ const Details = () => {
                 </h3>
                 <div className="mt-6 modal-action flex justify-center">
                   <form method="dialog">
-                    <button className="items-center mx-auto block justify-center px-10 py-3 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none ">
+                    <button
+                      onClick={() => handleDonate(request._id)}
+                      className="items-center mx-auto block justify-center px-10 py-3 text-base font-medium leading-6 text-white whitespace-no-wrap bg-red-600 border border-red-700 rounded-md shadow-sm hover:bg-red-700 focus:outline-none "
+                    >
                       Confirm
                     </button>
                   </form>

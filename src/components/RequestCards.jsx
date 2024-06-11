@@ -21,25 +21,25 @@ const RequestCards = ({ data }) => {
           {recipient_name}
         </h5>
         <div className="text-sm mb-1 font-medium text-gray-800">
-          <p className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <FaClock size={19} />
             <div>
-              <p>
+              <span>
                 {new Date(donation_date).toLocaleDateString()} At{" "}
                 {donation_time}
-              </p>
+              </span>
             </div>
-          </p>
+          </div>
         </div>
 
         <div className="text-sm mb-3 font-medium text-gray-800">
-          <p className="flex items-center gap-1">
+          <div className="flex items-center gap-1">
             <FaLocationDot size={21} />
             <div>
               <p>{hospital_name},</p>
               <p>{recipient_district}</p>
             </div>
-          </p>
+          </div>
         </div>
 
         <p className="mb-3 font-medium text-gray-800">{request_message}</p>
