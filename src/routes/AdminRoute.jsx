@@ -12,7 +12,7 @@ const AdminRoute = ({ children }) => {
     return;
   }
 
-  if (user && role === "admin") {
+  if (user && (role === "admin" || role === "volunteer")) {
     return children;
   }
 

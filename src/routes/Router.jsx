@@ -5,7 +5,6 @@ import DonationRequests from "../pages/DonationRequests";
 import Blog from "../pages/Blog";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Fundings from "../pages/Fundings";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../layouts/Dashboard";
 import DashboardHome from "../components/Dashboard/DashboardHome";
@@ -19,6 +18,8 @@ import AdminRoute from "./AdminRoute";
 import AllRequests from "../components/Dashboard/AllRequests";
 import ContentManagement from "../components/Dashboard/ContentManagement";
 import Search from "../pages/Search";
+import FundingPage from "../pages/FundingPage";
+import AddBlog from "../pages/Dashboard/AddBlog";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
         path: "/fundings",
         element: (
           <PrivateRoute>
-            <Fundings />
+            <FundingPage />
           </PrivateRoute>
         ),
       },
@@ -92,6 +93,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ContentManagement />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/content-management/add-blog",
+        element: (
+          <AdminRoute>
+            <AddBlog />
           </AdminRoute>
         ),
       },
