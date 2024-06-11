@@ -42,7 +42,7 @@ const Navbar = () => {
       )}
       <li className="block antialiased leading-normal">
         <NavLink to={"/blog"} className={navClass}>
-          Blog
+          Blogs
         </NavLink>
       </li>
     </>
