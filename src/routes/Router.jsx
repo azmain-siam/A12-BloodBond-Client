@@ -18,6 +18,7 @@ import UpdatePage from "../pages/Dashboard/UpdatePage";
 import AdminRoute from "./AdminRoute";
 import AllRequests from "../components/Dashboard/AllRequests";
 import ContentManagement from "../components/Dashboard/ContentManagement";
+import Search from "../pages/Search";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
     ],
   },

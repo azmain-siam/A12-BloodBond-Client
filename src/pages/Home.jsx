@@ -1,4 +1,7 @@
 import Helmet from "react-helmet";
+import Banner from "../components/Banner";
+import Feature from "../components/Feature";
+import ContactUs from "../components/ContactUs";
 
 const Home = () => {
   return (
@@ -6,7 +9,9 @@ const Home = () => {
       <Helmet>
         <title>Home | BloodBond</title>
       </Helmet>
-      <h3>Hello</h3>
+      <Banner />
+      <Feature />
+      <ContactUs />
     </div>
   );
 };
