@@ -21,6 +21,7 @@ import Search from "../pages/Search";
 import FundingPage from "../pages/FundingPage";
 import AddBlog from "../pages/Dashboard/AddBlog";
 import BlogDetails from "../pages/BlogDetails";
+import DonateFund from "../pages/DonateFund";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/donate-fund",
+        element: <DonateFund />,
       },
       {
         path: "/blog/details/:id",

@@ -7,8 +7,8 @@ import emptyImg from "../assets/empty.svg";
 
 const Search = () => {
   const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
   const [donors, setDonors] = useState([]);
-  const [search, setSearch] = useState("");
   const [searchedDonors, setSearchedDonors] = useState([]);
 
   const { data: users, isLoading } = useQuery({
@@ -22,13 +22,15 @@ const Search = () => {
   console.log(users);
 
   const handleSearch = async (data) => {
-    setSearch(data.blood_group);
-    await setDonors(users.filter((user) => user.role === "donor"));
+    setLoading(true);
+    // setSearch(data.blood_group);
+    setDonors(users.filter((user) => user.role === "donor"));
     const donor = donors.filter((d) => d.blood_group === data.blood_group);
-    await setSearchedDonors(donor);
+    setSearchedDonors(donor);
+    setLoading(false);
   };
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <LoadingBars />;
   }
 

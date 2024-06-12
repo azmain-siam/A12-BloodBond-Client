@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
 import { MdPayment } from "react-icons/md";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "../components/CheckoutForm";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const FundingPage = () => {
   return (
@@ -51,19 +56,23 @@ const FundingPage = () => {
       <div className="mb-4 text-3xl font-extrabold leading-none text-gray-900 md:text-4xl flex justify-between items-center">
         Fundings
         <div>
-          <button
-            onClick={() => document.getElementById("my_modal_2").showModal()}
-            className="btn btn-sm btn-neutral text-base tracking-normal	font-medium text-white py-2 px-4 h-full"
-          >
-            <MdPayment size={20} />
-            Add Fund
-          </button>
+          <Link to={"/donate-fund"}>
+            <button
+              // onClick={() => document.getElementById("my_modal_2").showModal()}
+              className="btn btn-sm btn-neutral text-base tracking-normal	font-medium text-white py-2 px-4 h-full"
+            >
+              <MdPayment size={20} />
+              Add Fund
+            </button>
+          </Link>
           <div className="flex justify-center">
-            {/* Open the modal using document.getElementById('ID').showModal() method */}
             <dialog id="my_modal_2" className="modal">
               <div className="modal-box">
                 <h3 className="font-medium text-lg">Donor Name:</h3>
                 <h3 className="font-medium text-lg mt-2">Donor Email:</h3>
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm />
+                </Elements>
                 <div className="mt-6 modal-action flex justify-center">
                   <form method="dialog">
                     <button className="items-center mx-auto block justify-center px-10 py-3 text-base font-medium leading-6 text-white font-poppins whitespace-no-wrap bg-red-600 border border-red-700 rounded-md shadow-sm hover:bg-red-700 focus:outline-none ">
