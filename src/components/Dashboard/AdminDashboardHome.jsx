@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingBars from "../LoadingBars";
+import { RiRefund2Line } from "react-icons/ri";
 
 const AdminDashboardHome = () => {
   const { user, loading } = useAuth();
@@ -23,9 +24,28 @@ const AdminDashboardHome = () => {
     },
   });
 
+  const { data: funds, isLoading: fundsLoading } = useQuery({
+    queryKey: ["funds"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/funds");
+      return data;
+    },
+  });
+
+  const totalFundAmount = funds.reduce((total, item) => {
+    return total + parseFloat(item.amount);
+  }, 0);
+
+  const formattedPrice = totalFundAmount.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  console.log(formattedPrice);
+
   const donors = users.filter((donor) => donor.role === "donor");
 
-  if (loading || allDataLoading || usersLoading) {
+  if (loading || allDataLoading || usersLoading || fundsLoading) {
     return <LoadingBars />;
   }
 
@@ -63,8 +83,8 @@ const AdminDashboardHome = () => {
             </svg>
           </div>
           <div className="px-4 text-gray-700">
-            <h3 className="text-lg tracking-wider">Total Donors</h3>
-            <p className="text-3xl">{donors.length}</p>
+            <h3 className="text-lg tracking-wide">Total Donors</h3>
+            <p className="text-3xl font-semibold">{donors.length}</p>
           </div>
         </div>
 
@@ -87,8 +107,19 @@ const AdminDashboardHome = () => {
             </svg>
           </div>
           <div className="px-4 text-gray-700">
-            <h3 className="text-lg tracking-wider">Total Requests</h3>
-            <p className="text-3xl">{allData.length}</p>
+            <h3 className="text-lg tracking-wide">Total Requests</h3>
+            <p className="text-3xl font-semibold">{allData.length}</p>
+          </div>
+        </div>
+
+        {/* Total Funds Card */}
+        <div className="flex items-center bg-white border rounded-lg overflow-hidden shadow">
+          <div className="p-4 bg-red-400">
+            <RiRefund2Line color="white" size={50} />
+          </div>
+          <div className="px-4 text-gray-700 space-y-1">
+            <h3 className="text-lg tracking-wide">Total Fundings</h3>
+            <p className="text-3xl font-semibold">${formattedPrice}</p>
           </div>
         </div>
       </div>

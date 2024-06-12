@@ -3,10 +3,28 @@ import { MdPayment } from "react-icons/md";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
+import LoadingBars from "../components/LoadingBars";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const FundingPage = () => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const { data: funds, isLoading } = useQuery({
+    queryKey: ["funds"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/fund/${user.email}`);
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return <LoadingBars />;
+  }
+
   return (
     <div className="font-poppins">
       <nav className="flex mb-4" aria-label="Breadcrumb">
@@ -54,7 +72,7 @@ const FundingPage = () => {
         </ol>
       </nav>
       <div className="mb-4 text-3xl font-extrabold leading-none text-gray-900 md:text-4xl flex justify-between items-center">
-        Fundings
+        My Fundings
         <div>
           <Link to={"/donate-fund"}>
             <button
@@ -94,34 +112,36 @@ const FundingPage = () => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-100">
             <tr>
               <th scope="col" className="px-6 py-3 rounded-s-lg">
-                Image
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Name
               </th>
-              <th scope="col" className="px-6 py-3 rounded-e-lg">
-                Email
+              <th scope="col" className="px-6 py-3">
+                Fund Amount
               </th>
               <th scope="col" className="px-6 py-3 rounded-e-lg">
-                Role
+                Date & Time
+              </th>
+              <th scope="col" className="px-6 py-3 rounded-e-lg">
+                Transaction ID
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white">
-              <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                user.name
-              </th>
-              <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                user.email
-              </th>
-              <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap">
-                user.role
-              </th>
-              <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap">
-                user.status
-              </th>
-            </tr>
+            {funds.map((fund) => (
+              <tr key={fund._id} className="bg-white">
+                <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  {fund.name}
+                </th>
+                <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  {fund.email}
+                </th>
+                <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap">
+                  {new Date(fund.data).toLocaleString()}
+                </th>
+                <th className="px-6 py-4 text-green-600 capitalize font-medium  whitespace-nowrap">
+                  {fund.transactionId}
+                </th>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

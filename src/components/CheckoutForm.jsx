@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 import "./Checkout.css";
+import toast from "react-hot-toast";
 
 const CheckoutForm = () => {
   const [error, setError] = useState("");
@@ -18,17 +19,16 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosSecure.post("/create-payment-intent", { price }).then((res) => {
-      console.log(res.data.clientSecret);
-      setClientSecret(res.data.clientSecret);
-    });
+    if (price > 0 && price < 1000000) {
+      axiosSecure.post("/create-payment-intent", { price }).then((res) => {
+        setClientSecret(res.data.clientSecret);
+      });
+    }
   }, [axiosSecure, price]);
 
   const handleInputChange = (event) => {
     setPrice(event.target.value);
   };
-
-  console.log(price);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,7 +49,7 @@ const CheckoutForm = () => {
     });
 
     if (error) {
-      console.log("[error]", error);
+      // console.log("[error]", error);
       setError(error.message);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
@@ -90,7 +90,7 @@ const CheckoutForm = () => {
           navigate("/fundings");
           return data;
         } catch (err) {
-          console.log(err);
+          toast.error(err.message);
         }
       }
     }
