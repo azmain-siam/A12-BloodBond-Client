@@ -22,7 +22,7 @@ const BlogDetails = () => {
   return (
     <div className="mb-10">
       <div>
-        <div className="w-[70%] h-[200px] md:h-[400px] border mx-auto rounded-lg overflow-hidden mb-6">
+        <div className="w-[70%] h-[200px] md:h-[450px] border mx-auto rounded-lg overflow-hidden mb-6">
           <img
             className="w-full h-full object-cover"
             src={blog.thumbnail}

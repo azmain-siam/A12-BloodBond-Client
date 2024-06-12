@@ -147,7 +147,7 @@ const Profile = () => {
                     </label>
                     <input
                       type="file"
-                      disabled={edit}
+                      disabled={edit} required
                       {...register("image")}
                       className="file-input file-input-bordered block w-full  text-gray-700 bg-white border rounded-lg  focus:border-primary "
                     />

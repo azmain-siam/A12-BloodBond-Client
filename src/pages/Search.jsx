@@ -96,8 +96,11 @@ const Search = () => {
                   src={donor.image}
                   alt="Bonnie image"
                 />
-                <h5 className="mb-1 text-xl font-medium text-gray-900">
+                <h5 className="mb-1 text-xl font-medium text-gray-900 flex items-center gap-2">
                   {donor.name}
+                  <span className="bg-red-100 text-red-700 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
+                    {donor.blood_group}
+                  </span>
                 </h5>
                 <span className="text-sm text-gray-500">
                   District: {donor.district}

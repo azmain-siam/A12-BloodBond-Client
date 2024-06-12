@@ -112,6 +112,9 @@ const FundingPage = () => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-100">
             <tr>
               <th scope="col" className="px-6 py-3 rounded-s-lg">
+                #
+              </th>
+              <th scope="col" className="px-6 py-3 rounded-s-lg">
                 Name
               </th>
               <th scope="col" className="px-6 py-3">
@@ -126,13 +129,16 @@ const FundingPage = () => {
             </tr>
           </thead>
           <tbody>
-            {funds.map((fund) => (
+            {funds.map((fund, idx) => (
               <tr key={fund._id} className="bg-white">
+                <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  {idx + 1}
+                </th>
                 <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                   {fund.name}
                 </th>
                 <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  {fund.email}
+                  ${fund.amount}
                 </th>
                 <th className="px-6 py-4 capitalize font-medium text-gray-900 whitespace-nowrap">
                   {new Date(fund.data).toLocaleString()}

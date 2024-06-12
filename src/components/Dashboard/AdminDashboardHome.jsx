@@ -32,11 +32,11 @@ const AdminDashboardHome = () => {
     },
   });
 
-  const totalFundAmount = funds.reduce((total, item) => {
+  const totalFundAmount = funds?.reduce((total, item) => {
     return total + parseFloat(item.amount);
   }, 0);
 
-  const formattedPrice = totalFundAmount.toLocaleString("en-US", {
+  const formattedPrice = totalFundAmount?.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -66,7 +66,7 @@ const AdminDashboardHome = () => {
       <div className="mt-10 grid md:grid-cols-2 gap-5">
         {/* Users Card */}
         <div className="flex items-center bg-white border rounded-lg overflow-hidden shadow">
-          <div className="p-4 bg-green-400">
+          <div className="p-4 bg-green-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-12 w-12 text-white"

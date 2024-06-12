@@ -4,6 +4,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import useAuth from "../hooks/useAuth";
 import { RiDashboardFill } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
+import logo from "/logo.png";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -70,8 +71,9 @@ const Navbar = () => {
               </div>
               <Link
                 to={"/"}
-                className="mr-4 block cursor-pointer text-xl md:text-2xl font-bold leading-relaxed text-inherit antialiased"
+                className="mr-4 flex items-center gap-1 cursor-pointer text-xl md:text-3xl font-bold leading-relaxed text-inherit antialiased"
               >
+                <img className="w-12" src={logo} alt="" />
                 BloodBond
               </Link>
             </div>

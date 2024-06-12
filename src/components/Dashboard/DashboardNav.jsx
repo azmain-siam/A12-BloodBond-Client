@@ -6,6 +6,7 @@ import useRole from "../../hooks/useRole";
 import DonorMenu from "./Menu/DonorMenu";
 import AdminMenu from "./Menu/AdminMenu";
 import VolunteerMenu from "./Menu/VolunteerMenu";
+import logo from "/logo.png";
 
 const DashboardNav = () => {
   // const [isAdmin] = useAdmin();
@@ -34,6 +35,13 @@ const DashboardNav = () => {
       >
         <div className="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto bg-gray-50">
           <ul className="space-y-2 font-medium">
+            <Link
+              to={"/"}
+              className="mr-4 flex items-center gap-1 cursor-pointer text-xl md:text-2xl font-bold leading-relaxed text-inherit antialiased mb-5"
+            >
+              <img className="w-9" src={logo} alt="" />
+              BloodBond
+            </Link>
             <li>
               <NavLink
                 to={"/dashboard"}
