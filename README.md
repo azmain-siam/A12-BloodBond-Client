@@ -22,7 +22,7 @@ Visit the live site at: [BloodBond](https://blood-bond-f0feb.web.app)
 7. **Educational Resources**: Access to articles and blogs about blood donation, health benefits, and the donation process.
 8. **Secure Data**: Ensures all user data is securely stored and protected.
 9. **Volunteer Opportunities**: Find and sign up for volunteer opportunities to support blood donation drives and events.
-10. **Community Stories**: Read and share inspiring stories from donors and recipients.
+10. **Find Donors Easily**: Easily find donors to take blood from.
 
 ## Getting Started
 
