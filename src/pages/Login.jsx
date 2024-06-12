@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <div className="flex w-full gap-10 max-w-sm mx-auto border overflow-hidden bg-white rounded-2xl shadow-lg lg:max-w-5xl mt-6 mb-10 pl-10">
       <Helmet>
-        <title>Login | HelpHive</title>
+        <title>Login | BloodBond</title>
       </Helmet>
       <div
         className="hidden bg-contain bg-no-repeat lg:block lg:w-1/2 bg-center"

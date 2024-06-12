@@ -130,7 +130,7 @@ const Register = () => {
   return (
     <div className="flex flex-row-reverse border w-full max-w-sm mx-auto overflow-hidden bg-white lg:max-w-5xl mt-6 mb-10 rounded-2xl shadow-lg">
       <Helmet>
-        <title>Register | HelpHive</title>
+        <title>Register | BloodBond</title>
       </Helmet>
       <div
         className="hidden bg-contain bg-no-repeat bg-center lg:block lg:w-[60%] mr-4"

@@ -7,6 +7,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import LoadingBars from "../components/LoadingBars";
+import { Helmet } from "react-helmet";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -27,6 +28,9 @@ const FundingPage = () => {
 
   return (
     <div className="font-poppins">
+       <Helmet>
+        <title>Fundings | BloodBond</title>
+      </Helmet>
       <nav className="flex mb-4" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
           <li className="inline-flex items-center">

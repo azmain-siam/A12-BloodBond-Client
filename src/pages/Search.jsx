@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { axiosCommon } from "../hooks/useAxiosCommon";
 import LoadingBars from "../components/LoadingBars";
 import emptyImg from "../assets/empty.svg";
+import { Helmet } from "react-helmet";
 
 const Search = () => {
   const { register, handleSubmit } = useForm();
@@ -41,6 +42,9 @@ const Search = () => {
 
   return (
     <div className="mb-7 ">
+      <Helmet>
+        <title>Search | BloodBond</title>
+      </Helmet>
       <form
         onSubmit={handleSubmit(handleSearch)}
         className="flex justify-center items-end w-full gap-4 mb-9"
