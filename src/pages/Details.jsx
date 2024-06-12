@@ -91,7 +91,7 @@ const Details = () => {
           <li className="inline-flex items-center">
             <Link
               to={"/"}
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 "
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-red-600 "
             >
               <svg
                 className="w-3 h-3 me-2.5"
@@ -124,7 +124,7 @@ const Details = () => {
               </svg>
               <Link
                 to={"/donation-requests"}
-                className="ms-1 text-sm font-medium text-gray-700  hover:text-blue-600 md:ms-2"
+                className="ms-1 text-sm font-medium text-gray-700  hover:text-red-600 md:ms-2"
               >
                 Donation Requests
               </Link>

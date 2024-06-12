@@ -291,7 +291,7 @@ const UpdatePage = () => {
             <textarea
               rows="3"
               defaultValue={data.request_message}
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red-500 focus:border-red-500"
               placeholder="Why blood is needed?"
               required
               {...register("request_message")}

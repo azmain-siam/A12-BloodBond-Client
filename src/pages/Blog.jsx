@@ -28,7 +28,7 @@ const Blog = () => {
           <li className="inline-flex items-center">
             <Link
               to={"/"}
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 "
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-red-600 "
             >
               <svg
                 className="w-3 h-3 me-2.5"
@@ -97,7 +97,7 @@ const Blog = () => {
                 <div>
                   <Link
                     to={`/blog/details/${blog._id}`}
-                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-rose-700 rounded-lg hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300"
+                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"
                   >
                     Read more
                     <svg

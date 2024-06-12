@@ -19,7 +19,7 @@ const ContactUs = () => {
             <input
               type="email"
               id="email"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-300 block w-full p-2.5"
+              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-300 block w-full p-2.5"
               placeholder="name@flowbite.com"
               required
             />
@@ -34,7 +34,7 @@ const ContactUs = () => {
             <input
               type="text"
               id="subject"
-              className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-rose-500 focus:border-rose-300"
+              className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-red-500 focus:border-red-300"
               placeholder="Let us know how we can help you"
               required
             />
@@ -49,13 +49,13 @@ const ContactUs = () => {
             <textarea
               id="message"
               rows="6"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-rose-500 focus:border-rose-300"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-red-500 focus:border-red-300"
               placeholder="Leave a comment..."
             ></textarea>
           </div>
           <button
             type="submit"
-            className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-rose-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-rose-300"
+            className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-red-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-red-300"
           >
             Send message
           </button>

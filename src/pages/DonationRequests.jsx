@@ -22,7 +22,7 @@ const DonationRequests = () => {
 
   return (
     <div className="mt-5 mb-10">
-       <Helmet>
+      <Helmet>
         <title>Requests | BloodBond</title>
       </Helmet>
       <nav className="flex mb-4" aria-label="Breadcrumb">
@@ -30,7 +30,7 @@ const DonationRequests = () => {
           <li className="inline-flex items-center">
             <Link
               to={"/"}
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 "
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-red-600 "
             >
               <svg
                 className="w-3 h-3 me-2.5"

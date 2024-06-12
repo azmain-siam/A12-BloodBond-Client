@@ -51,7 +51,7 @@ const RequestCards = ({ data }) => {
       <div>
         <Link
           to={`/details/${_id}`}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-rose-700 rounded-lg hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300"
+          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300"
         >
           View Details
           <svg

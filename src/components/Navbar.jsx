@@ -51,14 +51,14 @@ const Navbar = () => {
 
   const sideNavClass = ({ isActive }) =>
     isActive
-      ? "block p-4 text-sm font-semibold bg-blue-50 text-blue-600 rounded"
-      : "block p-4 text-sm font-semibold text-[#28282B] hover:bg-blue-50 hover:text-blue-600 rounded";
+      ? "block p-4 text-sm font-semibold bg-red-50 text-red-600 rounded"
+      : "block p-4 text-sm font-semibold text-[#28282B] hover:bg-red-50 hover:text-red-600 rounded";
 
   return (
     <div className="grid min-h-[66px] w-full place-items-center rounded-lg p-6 lg:overflow-visible">
       <div className="-m-6 max-h-[768px] w-[calc(100%+48px)]">
         <nav className="fixed top-0 z-50 block w-full max-w-full py-2 bg-white rounded-none shadow-md h-max border-white/80 bg-opacity-80 backdrop-blur-lg backdrop-saturate-200 lg:py-3">
-          <div className="flex max-w-[1440px] w-[93%] md:w-[95%] mx-auto items-center justify-between text-blue-gray-900">
+          <div className="flex max-w-[1440px] w-[93%] md:w-[95%] mx-auto items-center justify-between text-red-gray-900">
             {/* <----- Hamburger Icon ------> */}
             <div className="flex gap-3 items-center">
               <div className="lg:hidden">
@@ -206,7 +206,7 @@ const Navbar = () => {
                   Sign in
                 </a>
                 <a
-                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-red-600 hover:bg-red-700  rounded-xl"
                   href="#"
                 >
                   Sign Up

@@ -13,7 +13,7 @@ const Feature = () => {
     <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
         <div className="max-w-screen-md mb-8 lg:mb-16">
-          <h2 className="mb-4 text-2xl md:text-4xl tracking-tight font-extrabold text-gray-900">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
             See how BloodBond works for you
           </h2>
           <p className="text-gray-500 sm:text-xl">
@@ -24,8 +24,8 @@ const Feature = () => {
         </div>
         <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-rose-100 lg:h-12 lg:w-12">
-              <FaCalendarAlt className="text-rose-500" size={19} />
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-red-100 lg:h-12 lg:w-12">
+              <FaCalendarAlt className="text-red-500" size={19} />
             </div>
             <h3 className="mb-2 text-xl font-bold">Effortless Scheduling</h3>
             <p className="text-gray-500">
@@ -35,8 +35,8 @@ const Feature = () => {
             </p>
           </div>
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-rose-100 lg:h-12 lg:w-12">
-              <FaHistory className="text-rose-500" size={19} />
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-red-100 lg:h-12 lg:w-12">
+              <FaHistory className="text-red-500" size={19} />
             </div>
             <h3 className="mb-2 text-xl font-bold">
               Donation History Tracking
@@ -49,8 +49,8 @@ const Feature = () => {
           </div>
 
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-rose-100 lg:h-12 lg:w-12">
-              <FaUsers className="text-rose-500" size={21} />
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-red-100 lg:h-12 lg:w-12">
+              <FaUsers className="text-red-500" size={21} />
             </div>
             <h3 className="mb-2 text-xl font-bold">Community Engagement</h3>
             <p className="text-gray-500">
@@ -60,8 +60,8 @@ const Feature = () => {
             </p>
           </div>
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-rose-100 lg:h-12 lg:w-12">
-              <FaInfoCircle className="text-rose-500" size={20} />
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-red-100 lg:h-12 lg:w-12">
+              <FaInfoCircle className="text-red-500" size={20} />
             </div>
             <h3 className="mb-2 text-xl font-bold">Access to Resources</h3>
             <p className="text-gray-500">
@@ -71,8 +71,8 @@ const Feature = () => {
             </p>
           </div>
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-rose-100 lg:h-12 lg:w-12">
-              <FaTasks className="text-rose-500" size={19} />
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-red-100 lg:h-12 lg:w-12">
+              <FaTasks className="text-red-500" size={19} />
             </div>
             <h3 className="mb-2 text-xl font-bold">Easy Donation Management</h3>
             <p className="text-gray-500">
@@ -82,8 +82,8 @@ const Feature = () => {
             </p>
           </div>
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-rose-100 lg:h-12 lg:w-12">
-              <FaLock className="text-rose-500" size={18} />
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-red-100 lg:h-12 lg:w-12">
+              <FaLock className="text-red-500" size={18} />
             </div>
             <h3 className="mb-2 text-xl font-bold">Secure Data Handling</h3>
             <p className="text-gray-500">

@@ -59,7 +59,7 @@ const Search = () => {
             </label>
             <select
               {...register("blood_group")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-300 block w-full p-2.5"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-300 block w-full p-2.5"
             >
               <option selected>Select Blood Group</option>
               <option value="A+">A+</option>
@@ -76,7 +76,7 @@ const Search = () => {
         <div>
           <button
             type="submit"
-            className="text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-300 font-medium rounded-lg px-6 py-2.5 text-center me-2"
+            className="text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-6 py-2.5 text-center me-2"
           >
             Search
           </button>
