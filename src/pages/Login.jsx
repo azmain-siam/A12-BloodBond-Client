@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full gap-10 max-w-sm mx-auto border overflow-hidden bg-white rounded-2xl shadow-lg lg:max-w-5xl mt-6 mb-10 pl-10">
+    <div className="flex w-full gap-10 max-w-sm mx-auto border overflow-hidden bg-white rounded-2xl shadow-lg lg:max-w-5xl mt-6 mb-10 md:pl-10">
       <Helmet>
         <title>Login | BloodBond</title>
       </Helmet>

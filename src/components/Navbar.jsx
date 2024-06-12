@@ -73,7 +73,7 @@ const Navbar = () => {
                 to={"/"}
                 className="mr-4 flex items-center gap-1 cursor-pointer text-xl md:text-3xl font-bold leading-relaxed text-inherit antialiased"
               >
-                <img className="w-12" src={logo} alt="" />
+                <img className="w-8 md:w-12" src={logo} alt="" />
                 BloodBond
               </Link>
             </div>
@@ -196,22 +196,24 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <div className="mt-auto">
-            <div className="pt-6">
-              <a
-                className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
-                href="#"
-              >
-                Sign in
-              </a>
-              <a
-                className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                href="#"
-              >
-                Sign Up
-              </a>
+          {!user && (
+            <div className="mt-auto">
+              <div className="pt-6">
+                <a
+                  className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
+                  href="#"
+                >
+                  Sign in
+                </a>
+                <a
+                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                  href="#"
+                >
+                  Sign Up
+                </a>
+              </div>
             </div>
-          </div>
+          )}
         </nav>
       </div>
     </div>
