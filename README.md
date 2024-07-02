@@ -32,17 +32,14 @@ To run the BloodBond project locally by cloning from the GitHub repository, foll
 
    ```terminal
    git clone https://github.com/azmain-siam/A12-BloodBond-Client.git
-   
 2. **Navigate to the Project Directory**
 
    ```terminal
    cd A12-BloodBond-Client
-
 3. **Install Dependencies**
 
    ```terminal
    npm install
-
 4. **Run the server**
 
    ```terminal
