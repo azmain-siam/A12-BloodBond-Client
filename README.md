@@ -30,6 +30,20 @@ To run the BloodBond project locally by cloning from the GitHub repository, foll
 
 1. **Clone the Repository**
 
-   ```bash
-   git clone https://github.com/your-username/bloodbond.git
-2. 
+   ```terminal
+   git clone https://github.com/azmain-siam/A12-BloodBond-Client.git
+   
+2. **Navigate to the Project Directory**
+
+   ```terminal
+   cd A12-BloodBond-Client
+
+3. **Install Dependencies**
+
+   ```terminal
+   npm install
+
+4. **Run the server**
+
+   ```terminal
+   npm run dev
